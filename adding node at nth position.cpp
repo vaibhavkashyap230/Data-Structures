@@ -1,71 +1,104 @@
 #include<stdio.h>
 #include<iostream>
 using namespace std;
+
 class node
 {
 	public:
 		int data;
-		node* link;
+		node *link;
 };
 
-node* head;
+node *head;
 
 void insert(int x)
 {
-	node* temp=new node();
+	node *temp=new node();
 	temp->data=x;
-	temp->link=head;
-	head=temp;
+	temp->link=NULL;
+	
+	if (head!=NULL)
+	{
+		node *temp1=head;
+		while(temp1->link!=NULL)
+		{
+			temp1=temp1->link;
+		}
+		temp1->link=temp;
+	}
+	
+	else
+	{
+		head=temp;
+	}
 }
 
 void print()
 {
-	node* temp=head;
+	node *temp=head;
 	while(temp!=NULL)
 	{
-		cout<<temp->data<<" ";
+		cout << temp->data << " ";
 		temp=temp->link;
 	}
-	cout<<endl;
+	cout << endl;
 }
 
-void add(int p,int y)
+void add(int x,int p)
 {
-	node* temp=head;
-	p=p-1;
-	for(int i=1;i<p;i++)
+	node *temp=head;
+	if(p>1)
+	{
+	for(int i=0;i<p-2;i++)
 	{
 		temp=temp->link;
 	}
-	node* new_node=new node();
-	new_node->data=y;
-	new_node->link=temp->link;
-	temp->link=new_node;
+	node *aan=new node();
+	aan->data=x;
+	aan->link=temp->link;
+	temp->link=aan;
+    }
+    else
+    {
+    	if(p==0)
+    	{
+    		cout<<"The linked list starts from position 0"<<endl;
+		}
+		else
+		{
+			node *temp=new node();
+			temp->data=x;
+			temp->link=head;
+			head=temp;
+		}
+	}
 }
 
 int main()
 {
-	head=NULL;
-	cout<<"Enter the number of nodes: ";
+	head = NULL;
+	cout << "Enter the number of nodes : ";
 	int n;
-	cin>>n;
+	cin >> n;
 	for(int i=0;i<n;i++)
 	{
-		cout<<"Enter the number: ";
+		cout << endl;
+		cout << "Enter the "<<i+1<<" th node : ";
 		int x;
-		cin>>x;
+		cin >> x;
 		insert(x);
 		print();
-		cout<<endl;
 	}
-	cout<<"Enter the position at which node is to be added: ";
+	cout << endl;
+	cout<<"The position to add : ";
 	int p;
-	cin>>p;
-	cout<<endl;
-	cout<<"Enter the number to be added: ";
-	int y;
-	cin>>y;
-	add(p,y);
+	cin >> p;
+	cout << endl;
+	cout << "Enter the "<<p<<" th node : ";
+	int np;
+	cin >> np;
+	cout << endl;
+	add(np,p);
 	print();
 	return(0);
 }
