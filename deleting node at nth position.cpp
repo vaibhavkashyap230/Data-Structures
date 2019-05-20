@@ -5,73 +5,92 @@ using namespace std;
 class node
 {
 	public:
-	int data;
-	node* link;
+		int data;
+		node *link;
 };
 
-node* head;
+node *head;
 
 void insert(int x)
 {
-	node* temp=new node();
+	node *temp=new node();
 	temp->data=x;
-	temp->link=head;
-	head=temp;
+	temp->link=NULL;
+	
+	if (head!=NULL)
+	{
+		node *temp1=head;
+		while(temp1->link!=NULL)
+		{
+			temp1=temp1->link;
+		}
+		temp1->link=temp;
+	}
+	
+	else
+	{
+		head=temp;
+	}
 }
 
 void print()
 {
-	node* it=head;
-	while(it!=NULL)
+	node *temp=head;
+	while(temp!=NULL)
 	{
-		cout<<it->data<<" ";
-		it=it->link;
+		cout << temp->data << " ";
+		temp=temp->link;
 	}
-	cout<<endl;
+	cout << endl;
 }
 
-void remove(int i)
+void add(int p)
 {
-	node* temp=head;
-	int j=0;
-	if(i>1)
+	node *temp=head;
+	if (p>1)
 	{
-	for(j=0;j<i-2;j++)
+	for (int i=0;i<p-2;i++)
 	{
 		temp=temp->link;
 	}
-		node*temp1=temp->link;
-		temp->link=temp1->link;
-		delete temp1;
+	node *tbd=temp->link;
+	temp->link=tbd->link;
+	delete tbd;
     }
     else
     {
-    	node* temp=head->link;
-    	head=temp;
+    	if (p==0)
+    	{
+    		cout<<"The Linked list starts from index 1."<<endl;
+		}
+		else
+		{
+			head=head->link;
+		}
 	}
 }
 
-int main ()
+int main()
 {
-	cout<<"Enter the number of nodes: ";
+	head = NULL;
+	cout << "Enter the number of nodes : ";
 	int n;
-	cin>>n;
-	cout<<endl;
+	cin >> n;
 	for(int i=0;i<n;i++)
 	{
-		cout<<endl;
-		cout<<"Enter the number: ";
+		cout << endl;
+		cout << "Enter the "<<i+1<<" th node : ";
 		int x;
-		cin>>x;
+		cin >> x;
 		insert(x);
 		print();
 	}
-	cout<<endl;
-	cout<<"Enter the index of node to be deleted: ";
-	int i;
-	cin>>i;
-	cout<<endl;
-	remove(i);
+	cout << endl;
+	cout<<"The position to delete : ";
+	int p;
+	cin >> p;
+	cout << endl;
+	add(p);
 	print();
 	return(0);
 }
